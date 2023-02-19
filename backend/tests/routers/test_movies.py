@@ -141,7 +141,7 @@ def test_patch_movie_with_wrong_id() -> None:
     assert response.status_code == 404
 
 
-def test_patch_movie_with_wrong_body() -> None:
+def test_patch_movie_with_empty_body() -> None:
     db = next(get_db_session())
     movie = movie_models.Movie(title="Foo")
     db.add(movie)
@@ -151,7 +151,7 @@ def test_patch_movie_with_wrong_body() -> None:
     # sys.maxsize should be a big enough number that will never be actually set
     response = client.patch("/movies/%d" % movie.id, json={})
 
-    assert response.status_code == 422
+    assert response.status_code == 200
 
 
 def test_put_movie() -> None:
