@@ -7,8 +7,8 @@ import { BACKEND_BASE_PATH } from "./constants";
 class App extends Component {
   state = { items: [] }
 
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
     this.getItems()
   }
