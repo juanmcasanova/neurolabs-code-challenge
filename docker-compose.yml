@@ -4,3 +4,11 @@ services:
     volumes:
       - .:/usr/src/app
     command: sleep infinity
+
+  db:
+    image: mariadb:10.11
+    environment:
+      - MARIADB_ROOT_PASSWORD=root
+      - MARIADB_DATABASE=neurolabs
+    volumes:
+      - ./var/mariadb:/var/lib/mysql
