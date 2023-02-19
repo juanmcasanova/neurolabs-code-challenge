@@ -1,0 +1,12 @@
+// See https://containers.dev/implementors/json_reference/ for configuration reference
+{
+	"name": "Neurolabs code challenge",
+	"dockerComposeFile": "../docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/usr/src/app",
+	"customizations": {
+		"vscode": {
+			"extensions": ["ms-python.python"]
+		}
+	}
+}
