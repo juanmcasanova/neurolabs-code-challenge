@@ -14,6 +14,7 @@ import uvicorn
 
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
+from fastapi.middleware.cors import CORSMiddleware
 
 from .database import Base, engine
 from .routers import movies
@@ -24,6 +25,12 @@ Base.metadata.create_all(bind=engine)
 # Create the main app instance
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 app.include_router(movies.router)
 
 
