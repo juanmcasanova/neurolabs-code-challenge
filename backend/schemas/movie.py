@@ -1,9 +1,9 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import Union
 
 
 class MovieBase(BaseModel):
-    title: str
+    title: str = Field(min_length=1)
 
 
 class Movie(MovieBase):
@@ -18,4 +18,4 @@ class MovieCreate(MovieBase):
 
 
 class MovieUpdatePatch(MovieBase):
-    title: Union[str, None]
+    title: Union[str, None] = Field(min_length=1)

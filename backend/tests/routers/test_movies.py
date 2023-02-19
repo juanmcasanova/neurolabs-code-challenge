@@ -115,6 +115,12 @@ def test_create_movie_without_title() -> None:
     assert response.status_code == 422
 
 
+def test_create_movie_with_empty_title() -> None:
+    response = client.post("/movies", json={"title": ""})
+
+    assert response.status_code == 422
+
+
 def test_patch_movie() -> None:
     db = next(get_db_session())
     movie = movie_models.Movie(title="Foo")
@@ -154,6 +160,19 @@ def test_patch_movie_with_empty_body() -> None:
     assert response.status_code == 200
 
 
+def test_patch_movie_with_empty_title() -> None:
+    db = next(get_db_session())
+    movie = movie_models.Movie(title="Foo")
+    db.add(movie)
+    db.commit()
+    db.refresh(movie)
+
+    # sys.maxsize should be a big enough number that will never be actually set
+    response = client.patch("/movies/%d" % movie.id, json={"title": ""})
+
+    assert response.status_code == 422
+
+
 def test_put_movie() -> None:
     db = next(get_db_session())
     movie = movie_models.Movie(title="Foo")
@@ -187,7 +206,18 @@ def test_put_movie_with_wrong_body() -> None:
     db.commit()
     db.refresh(movie)
 
-    # sys.maxsize should be a big enough number that will never be actually set
     response = client.put("/movies/%d" % movie.id, json={})
+
+    assert response.status_code == 422
+
+
+def test_put_movie_with_empty_title() -> None:
+    db = next(get_db_session())
+    movie = movie_models.Movie(title="Foo")
+    db.add(movie)
+    db.commit()
+    db.refresh(movie)
+
+    response = client.put("/movies/%d" % movie.id, json={"title": ""})
 
     assert response.status_code == 422
