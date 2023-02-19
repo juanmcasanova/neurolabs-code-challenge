@@ -5,4 +5,5 @@ class MovieBase(BaseModel):
     title: str
 
 class Movie(MovieBase):
-    pass
+    class Config:
+        orm_mode = True
