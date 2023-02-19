@@ -1,6 +1,7 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy                 import Column, Integer, String
 
-from ..database import Base
+Base = declarative_base()
 
 class Movie(Base):
     __tablename__ = "movies"
