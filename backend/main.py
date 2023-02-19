@@ -13,6 +13,7 @@ load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '.env'))
 import uvicorn
 
 from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
 
 from .database import Base, engine
 from .routers import movies
@@ -28,11 +29,11 @@ app.include_router(movies.router)
 
 @app.get("/")
 async def root() -> dict:
-    """Example root endpoint.
+    """Main endpoint.
 
-    This is only a placeholder.
+    Redirects the user to the OpenAPI documentation.
     """
-    return {"message": "It works!"}
+    return RedirectResponse("/docs")
 
 
 if __name__ == '__main__':
