@@ -71,3 +71,20 @@ def test_get_movie_with_wrong_id():
     response = client.get("/movies/%d" % sys.maxsize)
 
     assert response.status_code == 404
+
+def test_delete_movie():
+    db    = next(get_db_session())
+    movie = movie_models.Movie(title="Foo")
+    db.add(movie)
+    db.commit()
+    db.refresh(movie)
+
+    response = client.delete("/movies/%d" % movie.id)
+
+    assert response.status_code == 204
+
+def test_delete_movie_with_wrong_id():
+    # sys.maxsize should be a big enough number that will never be actually set
+    response = client.delete("/movies/%d" % sys.maxsize)
+
+    assert response.status_code == 404
