@@ -20,3 +20,14 @@ def create_movie(db: Session, movie: movie_schemas.MovieCreate):
     db.refresh(db_movie)
 
     return db_movie
+
+def update_movie(db: Session, movie_update: movie_schemas.MovieCreate, movie: movie_models.Movie, exclude_unset: bool = True):
+    update_data = movie_update.dict(exclude_unset=exclude_unset)
+
+    if 'title' in update_data:
+        movie.title = update_data['title']
+
+    db.add(movie)
+    db.commit()
+
+    return movie
