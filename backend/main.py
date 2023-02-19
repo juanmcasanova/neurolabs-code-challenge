@@ -6,8 +6,8 @@ import os
 # TODO: Currently this has to be done before the imports because of how the database
 #       initialization works, but we should try to make it so it doesn't really matter
 from dotenv import load_dotenv
-load_dotenv(dotenv_path=os.path.dirname(__file__)+'/.env.local')
-load_dotenv(dotenv_path=os.path.dirname(__file__)+'/.env')
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '.env.local'))
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '.env'))
 
 import uvicorn
 
