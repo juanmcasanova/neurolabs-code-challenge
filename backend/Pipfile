@@ -9,6 +9,7 @@ sqlalchemy = "*"
 alembic = "*"
 uvicorn = "*"
 python-dotenv = "*"
+mysqlclient = "*"
 
 [dev-packages]
 

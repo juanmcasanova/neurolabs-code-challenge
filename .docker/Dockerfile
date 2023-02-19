@@ -6,7 +6,7 @@ FROM thecodingmachine/nodejs:v2-18-bullseye
 USER root
 
 # Install Pip (https://pip.pypa.io/en/stable/)
-RUN apt-get update && apt-get install -y python3-pip
+RUN apt-get update && apt-get install -y python3-pip libmariadb-dev
 
 # Install pipenv (https://github.com/pypa/pipenv)
 RUN pip3 install pipenv
