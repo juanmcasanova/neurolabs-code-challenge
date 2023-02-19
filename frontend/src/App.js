@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import { Container, Row, Col } from "reactstrap"
-import ModalForm from './Components/Modals/Modal'
+import ModalForm from './Components/Modals/ModalForm'
 import MoviesTable from './Components/Tables/MoviesTable'
 import { BACKEND_BASE_PATH } from "./constants";
 
@@ -63,12 +63,16 @@ class App extends Component {
         </Row>
         <Row>
           <Col>
-            <ModalForm buttonLabel="Add item" addItemToState={this.addItemToState} style={{float: "right"}} />
+            <ModalForm buttonLabel="Add item" addItemToState={this.addItemToState} />
           </Col>
         </Row>
         <Row>
           <Col>
-            <MoviesTable items={this.state.items} updateState={this.updateState} deleteItemFromState={this.deleteItemFromState} />
+            <MoviesTable
+              items={this.state.items}
+              updateState={this.updateState}
+              deleteItemFromState={this.deleteItemFromState}
+            />
           </Col>
         </Row>
       </Container>

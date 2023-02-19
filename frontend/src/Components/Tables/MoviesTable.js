@@ -1,22 +1,24 @@
 import React, {Component} from "react";
-import { Table, Button } from "reactstrap";
+import { Table } from "reactstrap";
 import ModalForm from '../Modals/Modal'
 import { BACKEND_BASE_PATH } from "../../constants";
+import ConfirmationModal from "../Modals/ConfirmationModal";
 
 class MoviesTable extends Component {
-    deleteItem = id => {
-        let confirmDelete = window.confirm('Delete item forever?')
-        if (confirmDelete) {
-            fetch(BACKEND_BASE_PATH+'/movies/'+id, { method: 'delete' })
-            // @todo Not needed?
-            .then(response => response.json())
-            .then(item => {
-                this.props.deleteItemFromState(id)
-            })
+    /**
+     * Deletes a movie from the database and the state.
+     *
+     * @param {*} item
+     */
+    deleteItem = (item) => {
+        fetch(BACKEND_BASE_PATH+'/movies/'+item.id, { method: 'delete' })
+            .then(() => {this.props.deleteItemFromState(item.id)})
             .catch(err => console.error(err))
-        }
     }
 
+    /**
+     * Returns the actual component markup.
+     */
     render() {
         const items = this.props.items.map(item => {
             return (
@@ -24,11 +26,8 @@ class MoviesTable extends Component {
                     <th scope="row">{item.id}</th>
                     <td>{item.title}</td>
                     <td>
-                        <div style={{width: "110px"}}>
                             <ModalForm buttonLabel="Edit" item={item} updateState={this.props.updateState} />
-                            {' '}
-                            <Button color="danger" onClick={() => this.deleteItem(item.id)}>Delete</Button>
-                        </div>
+                        <ConfirmationModal item={item} deleteItem={this.deleteItem} />
                     </td>
                 </tr>
             )
