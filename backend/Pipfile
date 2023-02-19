@@ -12,6 +12,7 @@ python-dotenv = "*"
 mysqlclient = "*"
 pytest = "*"
 httpx = "*"
+yapf = "*"
 
 [dev-packages]
 

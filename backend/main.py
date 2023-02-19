@@ -6,6 +6,7 @@ import os
 # TODO: Currently this has to be done before the imports because of how the database
 #       initialization works, but we should try to make it so it doesn't really matter
 from dotenv import load_dotenv
+
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '.env.local'))
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '.env'))
 
@@ -24,6 +25,7 @@ app = FastAPI()
 
 app.include_router(movies.router)
 
+
 @app.get("/")
 async def root() -> dict:
     """Example root endpoint.
@@ -31,6 +33,7 @@ async def root() -> dict:
     This is only a placeholder.
     """
     return {"message": "It works!"}
+
 
 if __name__ == '__main__':
     uvicorn.run(app, host="0.0.0.0", port=8000)
