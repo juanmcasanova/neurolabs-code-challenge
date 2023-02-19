@@ -88,3 +88,19 @@ def test_delete_movie_with_wrong_id():
     response = client.delete("/movies/%d" % sys.maxsize)
 
     assert response.status_code == 404
+
+def test_create_movie():
+    response = client.post("/movies", json={"title": "Foo"})
+
+    assert response.status_code == 201
+
+    responseData = response.json()
+
+    assert 'id' in responseData
+    assert 'title' in responseData
+    assert responseData['title'] == "Foo"
+
+def test_create_movie_without_title():
+    response = client.post("/movies", json={})
+
+    assert response.status_code == 422
