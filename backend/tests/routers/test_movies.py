@@ -141,3 +141,38 @@ def test_patch_movie_with_wrong_body():
 
     assert response.status_code == 422
 
+def test_put_movie():
+    db    = next(get_db_session())
+    movie = movie_models.Movie(title="Foo")
+    db.add(movie)
+    db.commit()
+    db.refresh(movie)
+
+    response = client.put("/movies/%d" % movie.id, json={"title": "Bar"})
+
+    assert response.status_code == 200
+
+    responseData = response.json()
+
+    assert 'id' in responseData
+    assert responseData['id'] == movie.id
+    assert 'title' in responseData
+    assert responseData['title'] == "Bar"
+
+def test_put_movie_with_wrong_id():
+    # sys.maxsize should be a big enough number that will never be actually set
+    response = client.put("/movies/%d" % sys.maxsize, json={"title": "Bar"})
+
+    assert response.status_code == 404
+
+def test_put_movie_with_wrong_body():
+    db    = next(get_db_session())
+    movie = movie_models.Movie(title="Foo")
+    db.add(movie)
+    db.commit()
+    db.refresh(movie)
+
+    # sys.maxsize should be a big enough number that will never be actually set
+    response = client.put("/movies/%d" % movie.id, json={})
+
+    assert response.status_code == 422
