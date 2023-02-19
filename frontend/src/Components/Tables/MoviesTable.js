@@ -1,8 +1,8 @@
 import React, {Component} from "react";
 import { Table } from "reactstrap";
 import ModalForm from '../Modals/ModalForm'
-import { BACKEND_BASE_PATH } from "../../constants";
 import ConfirmationModal from "../Modals/ConfirmationModal";
+import MoviesBackend from "../../Repository/MoviesBackend";
 
 class MoviesTable extends Component {
     /**
@@ -11,7 +11,7 @@ class MoviesTable extends Component {
      * @param {*} item
      */
     deleteItem = (item) => {
-        fetch(BACKEND_BASE_PATH+'/movies/'+item.id, { method: 'delete' })
+        MoviesBackend.deleteItem(item)
             .then(() => {this.props.deleteItemFromState(item.id)})
             .catch(err => console.error(err))
     }

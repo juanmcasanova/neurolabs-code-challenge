@@ -2,20 +2,10 @@ import React, {Component} from "react";
 import { Container, Row, Col } from "reactstrap"
 import ModalForm from './Components/Modals/ModalForm'
 import MoviesTable from './Components/Tables/MoviesTable'
-import { BACKEND_BASE_PATH } from "./constants";
+import MoviesBackend from "./Repository/MoviesBackend";
 
 class App extends Component {
   state = { items: [] }
-
-  /**
-   * Performs the actual fetch that will return all the movies data.
-   */
-  getItems() {
-    fetch(BACKEND_BASE_PATH+'/movies')
-      .then(response => response.json())
-      .then(items => this.setState({items}))
-      .catch(err => console.error('getItems', err))
-  }
 
   /**
    * Adds a new item to the state.
@@ -47,7 +37,9 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.getItems()
+    MoviesBackend.getItems()
+      .then(items => this.setState({items}))
+      .catch(err => console.error('getItems', err))
   }
 
   /**

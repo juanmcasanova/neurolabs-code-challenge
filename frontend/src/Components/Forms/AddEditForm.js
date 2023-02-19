@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import { BACKEND_BASE_PATH } from "../../constants";
+import MoviesBackend from '../../Repository/MoviesBackend';
 
 class AddEditForm extends React.Component {
   state = {
@@ -14,14 +14,7 @@ class AddEditForm extends React.Component {
 
   submitFormAdd = (e) => {
     e.preventDefault()
-    fetch(BACKEND_BASE_PATH+'/movies', {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ title: this.state.title })
-    })
-      .then((response) => response.json())
+    MoviesBackend.addItem(this.state.title)
       .then((item) => {
         this.props.addItemToState(item)
         this.props.toggle()
@@ -31,14 +24,7 @@ class AddEditForm extends React.Component {
 
   submitFormEdit = (e) => {
     e.preventDefault()
-    fetch(BACKEND_BASE_PATH+'/movies/'+this.state.id, {
-      method: 'put',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ title: this.state.title })
-    })
-      .then((response) => response.json())
+    MoviesBackend.editItem(this.state.id, this.state.title)
       .then((item) => {
         this.props.updateState(item)
         this.props.toggle()
