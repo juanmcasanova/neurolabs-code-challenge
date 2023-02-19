@@ -1,6 +1,6 @@
 services:
   app:
-    image: thecodingmachine/nodejs:v2-18-bullseye
+    build: .docker
     volumes:
       - .:/usr/src/app
     command: sleep infinity
