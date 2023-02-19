@@ -13,11 +13,13 @@ router = APIRouter(prefix="/movies")
 def list_movies(skip: int = 0,
                 limit: int = 10,
                 db: Session = Depends(get_db_session)) -> list[MovieModel]:
+    """Returns a list of movies."""
     return movies_repository.get_movies(db, skip=skip, limit=limit)
 
 
 @router.get("/{id}", response_model=movie_schemas.Movie)
 def get_movie(id: int, db: Session = Depends(get_db_session)) -> MovieModel:
+    """Returns a detailed view of a movie."""
     movie = movies_repository.get_movie(db, id)
     if movie is None:
         raise HTTPException(404, "Not found")
@@ -27,6 +29,7 @@ def get_movie(id: int, db: Session = Depends(get_db_session)) -> MovieModel:
 
 @router.delete("/{id}")
 def delete_movie(id: int, db: Session = Depends(get_db_session)) -> Response:
+    """Deletes an existing movie."""
     movie = movies_repository.get_movie(db, id)
     if movie is None:
         raise HTTPException(404, "Not found")
@@ -40,6 +43,7 @@ def delete_movie(id: int, db: Session = Depends(get_db_session)) -> Response:
 def create_movie(
     movie: movie_schemas.MovieCreate, db: Session = Depends(get_db_session)
 ) -> MovieModel:
+    """Creates a new movie."""
     return movies_repository.create_movie(db, movie)
 
 
@@ -49,6 +53,10 @@ def patch_movie(
     movie_update: movie_schemas.MovieCreate,
     db: Session = Depends(get_db_session)
 ) -> MovieModel:
+    """Updates a movie data.
+
+    If a field is missing it won't be changed in the database.
+    """
     movie = movies_repository.get_movie(db, id)
     if movie is None:
         raise HTTPException(404, "Not found")
@@ -65,6 +73,10 @@ def put_movie(
     movie_update: movie_schemas.MovieCreate,
     db: Session = Depends(get_db_session)
 ) -> MovieModel:
+    """Updates a movie data.
+
+    If a field is missing it will be set to null in the database.
+    """
     movie = movies_repository.get_movie(db, id)
     if movie is None:
         raise HTTPException(404, "Not found")
