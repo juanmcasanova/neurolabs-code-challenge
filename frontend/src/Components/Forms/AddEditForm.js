@@ -3,7 +3,10 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { BACKEND_BASE_PATH } from "../../constants";
 
 class AddEditForm extends React.Component {
-  state = { id, title }
+  state = {
+    id: 0,
+    title: ''
+  }
 
   onChange = (e) => {
     this.setState({[e.target.name]: e.target.value})
