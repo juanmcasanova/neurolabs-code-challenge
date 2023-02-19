@@ -12,3 +12,5 @@ services:
       - MARIADB_DATABASE=neurolabs
     volumes:
       - ./var/mariadb:/var/lib/mysql
+    ports:
+      - 3306:3306
