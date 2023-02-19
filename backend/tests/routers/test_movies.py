@@ -26,6 +26,17 @@ def test_list_movies() -> None:
     assert 'title' in responseData[0]
 
 
+def test_list_movies_adds_a_total_count_header() -> None:
+    db = next(get_db_session())
+    db.add(movie_models.Movie(title="Foo"))
+    db.commit()
+
+    response = client.get("/movies")
+
+    assert "X-Total-Count" in response.headers
+    assert 0 < int(response.headers["X-Total-Count"])
+
+
 def test_list_movies_limit() -> None:
     db = next(get_db_session())
     db.add(movie_models.Movie(title="Foo"))

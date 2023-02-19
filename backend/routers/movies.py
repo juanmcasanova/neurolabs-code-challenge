@@ -10,10 +10,13 @@ router = APIRouter(prefix="/movies")
 
 
 @router.get("", response_model=list[movie_schemas.Movie])
-def list_movies(skip: int = 0,
+def list_movies(response: Response,
+                skip: int = 0,
                 limit: int = 10,
                 db: Session = Depends(get_db_session)) -> list[MovieModel]:
     """Returns a list of movies."""
+    response.headers['X-Total-Count'] = str(movies_repository.get_total_count(db))
+
     return movies_repository.get_movies(db, skip=skip, limit=limit)
 
 

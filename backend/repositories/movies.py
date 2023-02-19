@@ -42,3 +42,6 @@ def update_movie(db: Session,
     db.commit()
 
     return movie
+
+def get_total_count(db: Session) -> int:
+    return db.query(MovieModel).count()
