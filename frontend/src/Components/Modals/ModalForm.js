@@ -5,6 +5,7 @@ import AddEditForm from '../Forms/AddEditForm'
 class ModalForm extends Component {
   constructor(props) {
     super(props)
+
     this.state = {
       modal: false
     }
@@ -17,8 +18,6 @@ class ModalForm extends Component {
   }
 
   render() {
-      const closeBtn = <button className="close" onClick={this.toggle}>&times;</button>
-
       const label = this.props.buttonLabel
 
       let button = ''
@@ -42,10 +41,10 @@ class ModalForm extends Component {
 
 
       return (
-      <div>
+      <span>
         {button}
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-          <ModalHeader toggle={this.toggle} close={closeBtn}>{title}</ModalHeader>
+          <ModalHeader toggle={this.toggle}>{title}</ModalHeader>
           <ModalBody>
             <AddEditForm
               addItemToState={this.props.addItemToState}
@@ -54,7 +53,7 @@ class ModalForm extends Component {
               item={this.props.item} />
           </ModalBody>
         </Modal>
-      </div>
+      </span>
     )
   }
 }

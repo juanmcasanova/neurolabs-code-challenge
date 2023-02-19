@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import { Table } from "reactstrap";
-import ModalForm from '../Modals/Modal'
+import ModalForm from '../Modals/ModalForm'
 import { BACKEND_BASE_PATH } from "../../constants";
 import ConfirmationModal from "../Modals/ConfirmationModal";
 
@@ -26,7 +26,7 @@ class MoviesTable extends Component {
                     <th scope="row">{item.id}</th>
                     <td>{item.title}</td>
                     <td>
-                            <ModalForm buttonLabel="Edit" item={item} updateState={this.props.updateState} />
+                        <ModalForm buttonLabel="Edit" item={item} updateState={this.props.updateState} />
                         <ConfirmationModal item={item} deleteItem={this.deleteItem} />
                     </td>
                 </tr>

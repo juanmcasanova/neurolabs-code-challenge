@@ -3,16 +3,13 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { BACKEND_BASE_PATH } from "../../constants";
 
 class AddEditForm extends React.Component {
-  state = {
-    id: 0,
-    title: ''
-  }
+  state = { id, title }
 
-  onChange = e => {
+  onChange = (e) => {
     this.setState({[e.target.name]: e.target.value})
   }
 
-  submitFormAdd = e => {
+  submitFormAdd = (e) => {
     e.preventDefault()
     fetch(BACKEND_BASE_PATH+'/movies', {
       method: 'post',
@@ -21,19 +18,15 @@ class AddEditForm extends React.Component {
       },
       body: JSON.stringify({ title: this.state.title })
     })
-      .then(response => response.json())
-      .then(item => {
-        if(Array.isArray(item)) {
-          this.props.addItemToState(item[0])
-          this.props.toggle()
-        } else {
-          console.log('failure')
-        }
+      .then((response) => response.json())
+      .then((item) => {
+        this.props.addItemToState(item)
+        this.props.toggle()
       })
-      .catch(err => console.log(err))
+      .catch(err => console.err(err))
   }
 
-  submitFormEdit = e => {
+  submitFormEdit = (e) => {
     e.preventDefault()
     fetch(BACKEND_BASE_PATH+'/movies/'+this.state.id, {
       method: 'put',
@@ -42,21 +35,17 @@ class AddEditForm extends React.Component {
       },
       body: JSON.stringify({ title: this.state.title })
     })
-      .then(response => response.json())
-      .then(item => {
-        if(Array.isArray(item)) {
-          this.props.updateState(item[0])
-          this.props.toggle()
-        } else {
-          console.log('failure')
-        }
+      .then((response) => response.json())
+      .then((item) => {
+        this.props.updateState(item)
+        this.props.toggle()
       })
-      .catch(err => console.log(err))
+      .catch(err => console.err(err))
   }
 
   componentDidMount(){
-    // if item exists, populate the state with proper data
-    if(this.props.item){
+    // If item exists, populate the state with proper data
+    if(this.props.item) {
       const { id, title } = this.props.item
       this.setState({ id, title })
     }
