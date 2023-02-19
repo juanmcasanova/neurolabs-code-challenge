@@ -1,12 +1,13 @@
 import React, {Component} from "react";
 import { Table, Button } from "reactstrap";
 import ModalForm from '../Modals/Modal'
+import { BACKEND_BASE_PATH } from "../../constants";
 
 class MoviesTable extends Component {
     deleteItem = id => {
         let confirmDelete = window.confirm('Delete item forever?')
         if (confirmDelete) {
-            fetch('http://localhost:8000/movies/'+id, { method: 'delete' })
+            fetch(BACKEND_BASE_PATH+'/movies/'+id, { method: 'delete' })
             // @todo Not needed?
             .then(response => response.json())
             .then(item => {

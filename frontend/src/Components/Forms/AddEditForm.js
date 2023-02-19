@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { BACKEND_BASE_PATH } from "../../constants";
 
 class AddEditForm extends React.Component {
   state = {
@@ -13,7 +14,7 @@ class AddEditForm extends React.Component {
 
   submitFormAdd = e => {
     e.preventDefault()
-    fetch('http://localhost:8000/movies', {
+    fetch(BACKEND_BASE_PATH+'/movies', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
@@ -34,7 +35,7 @@ class AddEditForm extends React.Component {
 
   submitFormEdit = e => {
     e.preventDefault()
-    fetch('http://localhost:8000/movies/'+this.state.id, {
+    fetch(BACKEND_BASE_PATH+'/movies/'+this.state.id, {
       method: 'put',
       headers: {
         'Content-Type': 'application/json'

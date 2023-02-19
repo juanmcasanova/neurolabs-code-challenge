@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import { Container, Row, Col } from "reactstrap"
 import ModalForm from './Components/Modals/Modal'
 import MoviesTable from './Components/Tables/MoviesTable'
+import { BACKEND_BASE_PATH } from "./constants";
 
 class App extends Component {
   state = { items: [] }
@@ -10,7 +11,7 @@ class App extends Component {
    * Performs the actual fetch that will return all the movies data.
    */
   getItems() {
-    fetch('http://localhost:8000/movies')
+    fetch(BACKEND_BASE_PATH+'/movies')
       .then(response => response.json())
       .then(items => this.setState({items}))
       .catch(err => console.error('getItems', err))
