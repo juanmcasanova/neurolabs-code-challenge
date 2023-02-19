@@ -7,12 +7,6 @@ import { BACKEND_BASE_PATH } from "./constants";
 class App extends Component {
   state = { items: [] }
 
-  constructor(props) {
-    super(props)
-
-    this.getItems()
-  }
-
   /**
    * Performs the actual fetch that will return all the movies data.
    */
@@ -52,6 +46,13 @@ class App extends Component {
     this.setState({ items: this.state.items.filter(item => item.id !== id) })
   }
 
+  componentDidMount() {
+    this.getItems()
+  }
+
+  /**
+   * Returns the actual component markup.
+   */
   render() {
     return (
       <Container className="App">
