@@ -3,7 +3,6 @@ import { BACKEND_BASE_PATH } from "../constants"
 class MoviesBackend {
     static getItems() {
         return fetch(BACKEND_BASE_PATH+'/movies')
-            .then(response => response.json())
     }
 
     static deleteItem(item) {

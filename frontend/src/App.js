@@ -5,7 +5,10 @@ import MoviesTable from './Components/Tables/MoviesTable'
 import MoviesBackend from "./Repository/MoviesBackend";
 
 class App extends Component {
-  state = { items: [] }
+  state = {
+    items: [],
+    totalItems: 0
+  }
 
   /**
    * Adds a new item to the state.
@@ -13,7 +16,13 @@ class App extends Component {
    * @param {*} item
    */
   addItemToState = (item) => {
-    this.setState(prevState => ({items: [...prevState.items, item]}))
+    this.setState(prevState => ({...prevState, items: [...prevState.items, item]}))
+  }
+
+  setTotalItems = (response) => {
+    this.setState({...this.state, totalItems: response.headers.get('x-total-count')})
+
+    return response
   }
 
   /**
@@ -24,7 +33,7 @@ class App extends Component {
   updateState = (item) => {
     const itemIndex = this.state.items.findIndex(data => data.id === item.id)
 
-    this.setState({ items: [...this.state.items.slice(0, itemIndex), item, ...this.state.items.slice(itemIndex + 1)] })
+    this.setState({ ...this.state, items: [...this.state.items.slice(0, itemIndex), item, ...this.state.items.slice(itemIndex + 1)] })
   }
 
   /**
@@ -33,13 +42,15 @@ class App extends Component {
    * @param {*} id
    */
   deleteItemFromState = (id) => {
-    this.setState({ items: this.state.items.filter(item => item.id !== id) })
+    this.setState({ ...this.state, items: this.state.items.filter(item => item.id !== id) })
   }
 
   componentDidMount() {
     MoviesBackend.getItems()
-      .then(items => this.setState({items}))
-      .catch(err => console.error('getItems', err))
+      .then((response) => this.setTotalItems(response))
+      .then((response) => response.json())
+      .then((items) => this.setState({...this.state, items}))
+      .catch((err) => console.error('getItems', err))
   }
 
   /**
