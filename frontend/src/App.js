@@ -7,6 +7,12 @@ import { BACKEND_BASE_PATH } from "./constants";
 class App extends Component {
   state = { items: [] }
 
+  constructor() {
+    super()
+
+    this.getItems()
+  }
+
   /**
    * Performs the actual fetch that will return all the movies data.
    */
@@ -37,13 +43,13 @@ class App extends Component {
     this.setState({ items: [...this.state.items.slice(0, itemIndex), item, ...this.state.items.slice(itemIndex + 1)] })
   }
 
+  /**
+   * Deletes an item from the state.
+   *
+   * @param {*} id
+   */
   deleteItemFromState = (id) => {
-    const udpatedItems = this.state.items.filter(item => item.id !== id)
-    this.setState({ items: udpatedItems })
-  }
-
-  componentDidMount() {
-    this.getItems()
+    this.setState({ items: this.state.items.filter(item => item.id !== id) })
   }
 
   render() {
