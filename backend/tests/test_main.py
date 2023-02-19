@@ -5,7 +5,7 @@ from ..main import app
 client = TestClient(app)
 
 
-def test_root_page():
+def test_root_page() -> None:
     response = client.get("/", follow_redirects=False)
 
     assert response.status_code == 307

@@ -9,7 +9,7 @@ from ...models import movie as movie_models
 client = TestClient(app)
 
 
-def test_list_movies():
+def test_list_movies() -> None:
     db = next(get_db_session())
     db.add(movie_models.Movie(title="Foo"))
     db.commit()
@@ -26,7 +26,7 @@ def test_list_movies():
     assert 'title' in responseData[0]
 
 
-def test_list_movies_limit():
+def test_list_movies_limit() -> None:
     db = next(get_db_session())
     db.add(movie_models.Movie(title="Foo"))
     db.add(movie_models.Movie(title="Bar"))
@@ -38,7 +38,7 @@ def test_list_movies_limit():
     assert len(response.json()) == 1
 
 
-def test_list_movies_skip():
+def test_list_movies_skip() -> None:
     db = next(get_db_session())
     db.add(movie_models.Movie(title="Foo"))
     db.add(movie_models.Movie(title="Bar"))
@@ -52,7 +52,7 @@ def test_list_movies_skip():
     assert firstResponse.json()[0]["id"] != secondResponse.json()[0]["id"]
 
 
-def test_get_movie():
+def test_get_movie() -> None:
     db = next(get_db_session())
     movie = movie_models.Movie(title="Foo")
     db.add(movie)
@@ -71,14 +71,14 @@ def test_get_movie():
     assert responseData['title'] == movie.title
 
 
-def test_get_movie_with_wrong_id():
+def test_get_movie_with_wrong_id() -> None:
     # sys.maxsize should be a big enough number that will never be actually set
     response = client.get("/movies/%d" % sys.maxsize)
 
     assert response.status_code == 404
 
 
-def test_delete_movie():
+def test_delete_movie() -> None:
     db = next(get_db_session())
     movie = movie_models.Movie(title="Foo")
     db.add(movie)
@@ -90,14 +90,14 @@ def test_delete_movie():
     assert response.status_code == 204
 
 
-def test_delete_movie_with_wrong_id():
+def test_delete_movie_with_wrong_id() -> None:
     # sys.maxsize should be a big enough number that will never be actually set
     response = client.delete("/movies/%d" % sys.maxsize)
 
     assert response.status_code == 404
 
 
-def test_create_movie():
+def test_create_movie() -> None:
     response = client.post("/movies", json={"title": "Foo"})
 
     assert response.status_code == 201
@@ -109,13 +109,13 @@ def test_create_movie():
     assert responseData['title'] == "Foo"
 
 
-def test_create_movie_without_title():
+def test_create_movie_without_title() -> None:
     response = client.post("/movies", json={})
 
     assert response.status_code == 422
 
 
-def test_patch_movie():
+def test_patch_movie() -> None:
     db = next(get_db_session())
     movie = movie_models.Movie(title="Foo")
     db.add(movie)
@@ -134,14 +134,14 @@ def test_patch_movie():
     assert responseData['title'] == "Bar"
 
 
-def test_patch_movie_with_wrong_id():
+def test_patch_movie_with_wrong_id() -> None:
     # sys.maxsize should be a big enough number that will never be actually set
     response = client.patch("/movies/%d" % sys.maxsize, json={"title": "Bar"})
 
     assert response.status_code == 404
 
 
-def test_patch_movie_with_wrong_body():
+def test_patch_movie_with_wrong_body() -> None:
     db = next(get_db_session())
     movie = movie_models.Movie(title="Foo")
     db.add(movie)
@@ -154,7 +154,7 @@ def test_patch_movie_with_wrong_body():
     assert response.status_code == 422
 
 
-def test_put_movie():
+def test_put_movie() -> None:
     db = next(get_db_session())
     movie = movie_models.Movie(title="Foo")
     db.add(movie)
@@ -173,14 +173,14 @@ def test_put_movie():
     assert responseData['title'] == "Bar"
 
 
-def test_put_movie_with_wrong_id():
+def test_put_movie_with_wrong_id() -> None:
     # sys.maxsize should be a big enough number that will never be actually set
     response = client.put("/movies/%d" % sys.maxsize, json={"title": "Bar"})
 
     assert response.status_code == 404
 
 
-def test_put_movie_with_wrong_body():
+def test_put_movie_with_wrong_body() -> None:
     db = next(get_db_session())
     movie = movie_models.Movie(title="Foo")
     db.add(movie)

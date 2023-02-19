@@ -1,25 +1,27 @@
 from sqlalchemy.orm import Session
+from typing import Union
 
-from ..models import movie as movie_models
+from ..models.movie import Movie as MovieModel
 from ..schemas import movie as movie_schemas
 
 
-def get_movies(db: Session, skip: int = 0, limit: int = 10):
-    return db.query(movie_models.Movie).offset(skip).limit(limit).all()
+def get_movies(db: Session,
+               skip: int = 0,
+               limit: int = 10) -> list[MovieModel]:
+    return db.query(MovieModel).offset(skip).limit(limit).all()
 
 
-def get_movie(db: Session, id: int):
-    return db.query(
-        movie_models.Movie).filter(movie_models.Movie.id == id).first()
+def get_movie(db: Session, id: int) -> Union[MovieModel, None]:
+    return db.query(MovieModel).filter(MovieModel.id == id).first()
 
 
-def delete_movie(db: Session, movie: movie_models.Movie):
+def delete_movie(db: Session, movie: MovieModel) -> None:
     db.delete(movie)
     db.commit()
 
 
-def create_movie(db: Session, movie: movie_schemas.MovieCreate):
-    db_movie = movie_models.Movie(title=movie.title)
+def create_movie(db: Session, movie: movie_schemas.MovieCreate) -> MovieModel:
+    db_movie = MovieModel(title=movie.title)
     db.add(db_movie)
     db.commit()
     db.refresh(db_movie)
@@ -29,8 +31,8 @@ def create_movie(db: Session, movie: movie_schemas.MovieCreate):
 
 def update_movie(db: Session,
                  movie_update: movie_schemas.MovieCreate,
-                 movie: movie_models.Movie,
-                 exclude_unset: bool = True):
+                 movie: MovieModel,
+                 exclude_unset: bool = True) -> MovieModel:
     update_data = movie_update.dict(exclude_unset=exclude_unset)
 
     if 'title' in update_data:
