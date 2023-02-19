@@ -7,3 +7,7 @@ def get_movies(db: Session, skip: int = 0, limit: int = 10):
 
 def get_movie(db: Session, id: int):
     return db.query(movie.Movie).filter(movie.Movie.id == id).first()
+
+def delete_movie(db: Session, movie: movie.Movie):
+    db.delete(movie)
+    db.commit()

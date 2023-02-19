@@ -1,4 +1,4 @@
-from fastapi        import APIRouter, Depends, HTTPException
+from fastapi        import APIRouter, Depends, HTTPException, Response
 from sqlalchemy.orm import Session
 
 from ..schemas      import movie as movie_schemas
@@ -18,3 +18,13 @@ def get_movie(id: int, db: Session = Depends(get_db_session)):
         raise HTTPException(404, "Not found")
 
     return movie
+
+@router.delete("/{id}")
+def delete_movie(id: int, db: Session = Depends(get_db_session)):
+    movie = movies_repository.get_movie(db, id)
+    if movie is None:
+        raise HTTPException(404, "Not found")
+
+    movies_repository.delete_movie(db, movie)
+
+    return Response(status_code=204)
