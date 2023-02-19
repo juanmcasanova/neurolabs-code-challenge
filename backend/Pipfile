@@ -10,6 +10,8 @@ alembic = "*"
 uvicorn = "*"
 python-dotenv = "*"
 mysqlclient = "*"
+pytest = "*"
+httpx = "*"
 
 [dev-packages]
 
