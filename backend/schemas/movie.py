@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Union
 
 
 class MovieBase(BaseModel):
@@ -14,3 +15,7 @@ class Movie(MovieBase):
 
 class MovieCreate(MovieBase):
     pass
+
+
+class MovieUpdatePatch(MovieBase):
+    title: Union[str, None]

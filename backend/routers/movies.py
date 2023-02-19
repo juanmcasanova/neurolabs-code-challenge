@@ -50,7 +50,7 @@ def create_movie(
 @router.patch("/{id}", response_model=movie_schemas.Movie)
 def patch_movie(
     id: int,
-    movie_update: movie_schemas.MovieCreate,
+    movie_update: movie_schemas.MovieUpdatePatch,
     db: Session = Depends(get_db_session)
 ) -> MovieModel:
     """Updates a movie data.
