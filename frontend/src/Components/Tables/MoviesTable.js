@@ -35,7 +35,7 @@ class MoviesTable extends Component {
         })
 
         return (
-            <Table response hover>
+            <Table responsive hover>
                 <thead>
                     <tr>
                         <th>ID</th>
