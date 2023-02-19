@@ -39,4 +39,12 @@ def patch_movie(id:int, movie_update: movie_schemas.MovieCreate, db: Session = D
     if movie is None:
         raise HTTPException(404, "Not found")
 
-    return movies_repository.update_movie(db, movie_update, movie, True)
+    return movies_repository.update_movie(db, movie_update, movie, exclude_unset=True)
+
+@router.put("/{id}", response_model=movie_schemas.Movie)
+def put_movie(id:int, movie_update: movie_schemas.MovieCreate, db: Session = Depends(get_db_session)):
+    movie = movies_repository.get_movie(db, id)
+    if movie is None:
+        raise HTTPException(404, "Not found")
+
+    return movies_repository.update_movie(db, movie_update, movie, exclude_unset=False)
