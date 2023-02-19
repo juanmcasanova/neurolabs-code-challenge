@@ -28,3 +28,9 @@ def delete_movie(id: int, db: Session = Depends(get_db_session)):
     movies_repository.delete_movie(db, movie)
 
     return Response(status_code=204)
+
+@router.post("", response_model=movie_schemas.Movie)
+def create_movie(movie: movie_schemas.MovieCreate, db: Session = Depends(get_db_session)):
+    return movies_repository.create_movie(db, movie)
+
+
