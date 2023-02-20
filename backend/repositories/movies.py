@@ -8,7 +8,7 @@ from ..schemas import movie as movie_schemas
 def get_movies(db: Session,
                skip: int = 0,
                limit: int = 10) -> list[MovieModel]:
-    return db.query(MovieModel).offset(skip).limit(limit).all()
+    return db.query(MovieModel).order_by(MovieModel.id.asc()).offset(skip).limit(limit).all()
 
 
 def get_movie(db: Session, id: int) -> Union[MovieModel, None]:
